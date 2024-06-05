@@ -1,25 +1,24 @@
 import SwiftUI
+import Combine
 import WebKit
 import ActivityKit
 import OneSignalFramework
 import OneSignalLiveActivities
 
 struct ContentView: View {
-//    @StateObject private var laViewModel = LiveActivityViewModel()
-    @EnvironmentObject private var urlVM: URLViewModel
+    @ObservedObject var urlVM: URLViewModel
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 40) {
-//                Button("Start Live Activity") {
-//                    viewModel.startLiveActivity()
-//                }
+                Button("test") {
+                    urlVM.handleURL("https://slash-magic-cloak.glitch.me")
+                }
                 Text(urlVM.url)
                     .padding()
             }
         }
     }
-    
 }
 
 struct MySecondScreen: View {
@@ -28,18 +27,16 @@ struct MySecondScreen: View {
     }
 }
 
-
 class URLViewModel: ObservableObject {
-    @Published var url: String = "No URL opened yet"
+    @Published var url: String
     
-    func handleURL(_ url: URL?) {
+    init() {
+        url = "No URL found yet"
+    }
+    
+    func handleURL(_ url: String) {
         print("handling URL")
-        guard let u = url else {
-            print("Could not parse URL")
-            return
-        }
-        print("Setting URL")
-        self.url = u.absoluteString
+        self.url = url
     }
 }
 
