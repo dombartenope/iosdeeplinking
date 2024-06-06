@@ -16,7 +16,7 @@
 		</dict>
 	</array>
 	<key>OneSignal_suppress_launch_urls</key>
-	<true/>
+	<false/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

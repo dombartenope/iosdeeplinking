@@ -9,10 +9,11 @@ import Mixpanel
 struct pushtostartApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject private var urlViewModel = URLViewModel()
-    
+    @StateObject private var liveActivityViewModel = LiveActivityViewModel()
+
     var body: some Scene {
         WindowGroup {
-            ContentView(urlVM: urlViewModel)
+            ContentView(viewModel: liveActivityViewModel, urlVM: urlViewModel)
                 .onAppear {
                     appDelegate.setURLViewModel(urlViewModel) // Pass the instance to AppDelegate
                 }
