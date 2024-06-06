@@ -15,6 +15,7 @@ struct ContentView: View {
             VStack(spacing: 40) {
                 Button("Launch Live Activity") {
                     viewModel.startLiveActivity()
+                    OneSignal.User.addTag(key:"live_activity", value:"true")
                 }
                 Button("Nav to 2nd Screen") {
                     urlVM.handleURL("https://slash-magic-cloak.glitch.me")
@@ -53,21 +54,40 @@ class URLViewModel: ObservableObject {
 }
 
 class LiveActivityViewModel: ObservableObject {
+    
+    init() {
+        OneSignal.LiveActivities.setup(ptsAttributes.self)
+    }
+    
+    var active: Bool = false
+    
     func startLiveActivity() {
         let osAttributes = OneSignalLiveActivityAttributeData.create(activityId: "my_activity_id")
         let attributes = ptsAttributes(name: "Default", onesignal: osAttributes)
         let contentState = ptsAttributes.ContentState(emoji:"😀", onesignal: nil)
         
         do {
-            _ = try Activity<ptsAttributes>.request(
+            let activity = try Activity<ptsAttributes>.request(
                 attributes: attributes,
                 contentState: contentState,
                 pushType: .token)
             
+            //Listen for early exit
+            Task {
+                for await state in activity.activityStateUpdates {
+                    print("LA state update: \(state)")
+                    if state != ActivityState.active {
+                        OneSignal.User.removeTag("live_activity")
+                    }
+                }
+                
+                
+            }
             
         } catch {
             print(error.localizedDescription)
         }
     }
+    
     
 }

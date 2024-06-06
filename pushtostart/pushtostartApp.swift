@@ -21,7 +21,8 @@ struct pushtostartApp: App {
     }
 }
 
-class AppDelegate: UIResponder, UIApplicationDelegate, OSNotificationClickListener {
+class AppDelegate: UIResponder, UIApplicationDelegate, OSNotificationClickListener, OSInAppMessageClickListener {
+    
     private var urlVM: URLViewModel?
     
     func setURLViewModel(_ urlViewModel: URLViewModel) {
@@ -36,21 +37,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate, OSNotificationClickListen
         Mixpanel.mainInstance().identify(distinctId: "dominick@onesignal.com");
         Mixpanel.mainInstance().people.set(properties: [ "plan":"Premium", "$email":"dominick@onesignal.com", "User ID":"dom12345"])
         
-        OneSignal.InAppMessages.addTrigger("test", withValue: "test")
+        //SDK SET UP
         OneSignal.Debug.setLogLevel(.LL_VERBOSE)
         OneSignal.initialize("c78671ca-6d42-4d5b-98c1-f0775e95d0f4", withLaunchOptions: launchOptions)
         
+        //NOTIFICATION PERMISSION AND LOGIC
         OneSignal.Notifications.requestPermission({ accepted in
             print("User accepted notifications: \(accepted)")
         }, fallbackToSettings: true)
-        
-        OneSignal.login("dom12345")
-        OneSignal.LiveActivities.setup(ptsAttributes.self)
         OneSignal.Notifications.addClickListener(self)
+
+        //USER LOGIC
+        OneSignal.login("dom12345")
         
+        //LIVE ACTIVITY LOGIC
+        OneSignal.LiveActivities.setup(ptsAttributes.self)
+        
+        
+        //IAM LOGIC
+        OneSignal.InAppMessages.addTrigger("test", withValue: "test")
+        OneSignal.InAppMessages.addClickListener(self)
+
         return true
     }
-
+    
+    func onClick(event: OSInAppMessageClickEvent){
+        let actionId = event.result.actionId
+        if actionId == "https://slash-magic-cloak.glitch.me" {
+            self.urlVM?.handleURL(actionId!)
+        }
+    }
+    
     func onClick(event: OSNotificationClickEvent) {
         if let launchURL = event.notification.launchURL {
             DispatchQueue.main.async {
@@ -60,3 +77,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate, OSNotificationClickListen
         }
     }
 }
+
