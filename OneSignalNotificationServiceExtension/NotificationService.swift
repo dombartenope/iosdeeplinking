@@ -10,7 +10,7 @@ class NotificationService: UNNotificationServiceExtension {
         self.contentHandler = contentHandler
         self.bestAttemptContent = request.content.mutableCopy() as? UNMutableNotificationContent
         
-        self.bestAttemptContent!.body = "[Modified] " + (self.bestAttemptContent?.body ?? "")
+//        self.bestAttemptContent!.body = "[Modified] " + (self.bestAttemptContent?.body ?? "")
 
     }
     

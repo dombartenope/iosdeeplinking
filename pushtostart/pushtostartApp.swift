@@ -4,6 +4,7 @@ import OneSignalLiveActivities
 import OneSignalOutcomes
 import OneSignalInAppMessages
 import Mixpanel
+import Foundation
 
 @main
 struct pushtostartApp: App {
@@ -22,6 +23,7 @@ struct pushtostartApp: App {
 }
 
 class AppDelegate: UIResponder, UIApplicationDelegate, OSNotificationClickListener, OSInAppMessageClickListener {
+    
     
     private var urlVM: URLViewModel?
     
@@ -46,9 +48,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, OSNotificationClickListen
             print("User accepted notifications: \(accepted)")
         }, fallbackToSettings: true)
         OneSignal.Notifications.addClickListener(self)
-
+        
         //USER LOGIC
-        OneSignal.login("dom12345")
+        OneSignal.login("SG_Demo")
         
         //LIVE ACTIVITY LOGIC
         OneSignal.LiveActivities.setup(ptsAttributes.self)
@@ -57,24 +59,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, OSNotificationClickListen
         //IAM LOGIC
         OneSignal.InAppMessages.addTrigger("test", withValue: "test")
         OneSignal.InAppMessages.addClickListener(self)
-
+        
         return true
     }
     
     func onClick(event: OSInAppMessageClickEvent){
         let actionId = event.result.actionId
-        if actionId == "https://slash-magic-cloak.glitch.me" {
+        if actionId == "customscheme://test" {
             self.urlVM?.handleURL(actionId!)
         }
     }
     
     func onClick(event: OSNotificationClickEvent) {
+        
         if let launchURL = event.notification.launchURL {
             DispatchQueue.main.async {
                 self.urlVM?.handleURL(launchURL) // Use the shared instance
                 print(launchURL)
             }
         }
+        
+        if let customScheme = event.notification.additionalData {
+            if let stringValue = customScheme["url"] as? String {
+                self.urlVM?.handleURL(stringValue) // Use the shared instance
+            } else {
+                print("The value is invalid")
+            }
+        }
+        
     }
 }
 

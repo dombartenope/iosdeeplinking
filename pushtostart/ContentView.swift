@@ -9,7 +9,8 @@ struct ContentView: View {
     @ObservedObject var viewModel: LiveActivityViewModel
     @ObservedObject var urlVM: URLViewModel
     @State private var navigateToSecondScreen = false
-    
+    @State private var navigateToCustomURLScreen = false
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 40) {
@@ -17,18 +18,23 @@ struct ContentView: View {
                     viewModel.startLiveActivity()
                     OneSignal.User.addTag(key:"live_activity", value:"true")
                 }
-                Button("Nav to 2nd Screen") {
-                    urlVM.handleURL("https://slash-magic-cloak.glitch.me")
-                }
                 Text(urlVM.url)
                     .padding()
                 NavigationLink(destination: MySecondScreen(), isActive: $navigateToSecondScreen) {
                     EmptyView() // This creates a hidden link
                 }
-            }.onChange(of: urlVM.url) { newValue in
-                if newValue == "https://slash-magic-cloak.glitch.me" {
-                    navigateToSecondScreen = true // Trigger navigation when URL is updated
+                
+                NavigationLink(destination: CustomUrlScreen(), isActive: $navigateToCustomURLScreen) {
+                    EmptyView() // This creates a hidden link
                 }
+            }.onChange(of: urlVM.url) { newValue in
+                
+                if newValue == "https://slash-magic-cloak.glitch.me" {
+                    navigateToSecondScreen = true // Trigger navigation when URL is updated from Universal Link
+                } else if newValue == "customscheme://test" {
+                    navigateToCustomURLScreen = true // Trigger navigation when URL is updated from Custom URL Scheme
+                }
+                
             }
         }
     }
@@ -37,6 +43,12 @@ struct ContentView: View {
 struct MySecondScreen: View {
     var body: some View {
         Text("Opened from deeplink")
+    }
+}
+
+struct CustomUrlScreen: View {
+    var body: some View {
+        Text("Opened from Custom URL Scheme")
     }
 }
 

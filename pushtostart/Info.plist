@@ -15,6 +15,8 @@
 			</array>
 		</dict>
 	</array>
+	<key>OneSignal_in_app_message_hide_drop_shadow</key>
+	<false/>
 	<key>OneSignal_suppress_launch_urls</key>
 	<true/>
 	<key>UIBackgroundModes</key>
