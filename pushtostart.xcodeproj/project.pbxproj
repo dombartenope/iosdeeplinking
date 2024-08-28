@@ -28,6 +28,8 @@
 		8F7057812BE004BB004C419F /* ptsLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7057722BE004AC004C419F /* ptsLiveActivity.swift */; };
 		8F8CF2542BFCDB8B00DE8266 /* OneSignalExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 8F8CF2532BFCDB8B00DE8266 /* OneSignalExtension */; };
 		8F8CF2562BFCDB8E00DE8266 /* OneSignalFramework in Frameworks */ = {isa = PBXBuildFile; productRef = 8F8CF2552BFCDB8E00DE8266 /* OneSignalFramework */; };
+		8F96DC072C7F74B600190FED /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8F96DC062C7F74B600190FED /* Config.plist */; };
+		8F96DC092C7F755D00190FED /* ConfigManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F96DC082C7F755D00190FED /* ConfigManager.swift */; };
 		8FFD7BC92C00D3160010C9CF /* Mixpanel in Frameworks */ = {isa = PBXBuildFile; productRef = 8FFD7BC82C00D3160010C9CF /* Mixpanel */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +66,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8F48DE5B2C458CD400BD90AE /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		8F48DE5D2C458CD400BD90AE /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
 		8F70573B2BE0042D004C419F /* pushtostart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pushtostart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F70573E2BE0042D004C419F /* pushtostartApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pushtostartApp.swift; sourceTree = "<group>"; };
 		8F7057402BE0042D004C419F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -83,6 +87,10 @@
 		8F70577A2BE004AD004C419F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8F7057822BE004E9004C419F /* pushtostart.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = pushtostart.entitlements; sourceTree = "<group>"; };
 		8F7057832BE00513004C419F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8F96DC062C7F74B600190FED /* Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
+		8F96DC082C7F755D00190FED /* ConfigManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigManager.swift; sourceTree = "<group>"; };
+		8FC61B712C6BB4D00065E195 /* OneSignalNotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtension.entitlements; sourceTree = "<group>"; };
+		8FED61E42C7E536E003EB6D5 /* pushtostartRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = pushtostartRelease.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,12 +151,15 @@
 		8F70573D2BE0042D004C419F /* pushtostart */ = {
 			isa = PBXGroup;
 			children = (
+				8FED61E42C7E536E003EB6D5 /* pushtostartRelease.entitlements */,
 				8F7057832BE00513004C419F /* Info.plist */,
 				8F7057822BE004E9004C419F /* pushtostart.entitlements */,
 				8F70573E2BE0042D004C419F /* pushtostartApp.swift */,
 				8F7057402BE0042D004C419F /* ContentView.swift */,
 				8F7057422BE0042E004C419F /* Assets.xcassets */,
 				8F7057442BE0042E004C419F /* Preview Content */,
+				8F96DC062C7F74B600190FED /* Config.plist */,
+				8F96DC082C7F755D00190FED /* ConfigManager.swift */,
 			);
 			path = pushtostart;
 			sourceTree = "<group>";
@@ -164,6 +175,7 @@
 		8F70575A2BE00497004C419F /* OneSignalNotificationServiceExtension */ = {
 			isa = PBXGroup;
 			children = (
+				8FC61B712C6BB4D00065E195 /* OneSignalNotificationServiceExtension.entitlements */,
 				8F70575B2BE00497004C419F /* NotificationService.swift */,
 				8F70575D2BE00497004C419F /* Info.plist */,
 			);
@@ -175,6 +187,8 @@
 			children = (
 				8F70576B2BE004AC004C419F /* WidgetKit.framework */,
 				8F70576D2BE004AC004C419F /* SwiftUI.framework */,
+				8F48DE5B2C458CD400BD90AE /* UserNotifications.framework */,
+				8F48DE5D2C458CD400BD90AE /* UserNotificationsUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -267,7 +281,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1520;
+				LastSwiftUpdateCheck = 1530;
 				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					8F70573A2BE0042D004C419F = {
@@ -311,6 +325,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F7057462BE0042E004C419F /* Preview Assets.xcassets in Resources */,
+				8F96DC072C7F74B600190FED /* Config.plist in Resources */,
 				8F7057432BE0042E004C419F /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -340,6 +355,7 @@
 				8F7057412BE0042D004C419F /* ContentView.swift in Sources */,
 				8F7057812BE004BB004C419F /* ptsLiveActivity.swift in Sources */,
 				8F70573F2BE0042D004C419F /* pushtostartApp.swift in Sources */,
+				8F96DC092C7F755D00190FED /* ConfigManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,6 +529,7 @@
 				INFOPLIST_FILE = pushtostart/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				INFOPLIST_KEY_NSSupportsLiveActivitiesFrequentUpdates = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -537,7 +554,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = pushtostart/pushtostart.entitlements;
+				CODE_SIGN_ENTITLEMENTS = pushtostart/pushtostartRelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"pushtostart/Preview Content\"";
@@ -547,6 +564,7 @@
 				INFOPLIST_FILE = pushtostart/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				INFOPLIST_KEY_NSSupportsLiveActivitiesFrequentUpdates = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -568,6 +586,7 @@
 		8F7057622BE00497004C419F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 99SW8E36CT;
@@ -593,6 +612,7 @@
 		8F7057632BE00497004C419F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 99SW8E36CT;

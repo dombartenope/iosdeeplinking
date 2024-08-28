@@ -14,7 +14,7 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 40) {
-                Button("Launch Live Activity") {
+                Button("Start Live Activity Token"){
                     viewModel.startLiveActivity()
                     OneSignal.User.addTag(key:"live_activity", value:"true")
                 }
@@ -67,39 +67,25 @@ class URLViewModel: ObservableObject {
 
 class LiveActivityViewModel: ObservableObject {
     
-    init() {
-        OneSignal.LiveActivities.setup(ptsAttributes.self)
-    }
+    //    init() {
+    //        OneSignal.LiveActivities.setup(ptsAttributes.self)
+    //    }
     
     var active: Bool = false
     
+    
     func startLiveActivity() {
-        let osAttributes = OneSignalLiveActivityAttributeData.create(activityId: "my_activity_id")
-        let attributes = ptsAttributes(name: "Default", onesignal: osAttributes)
-        let contentState = ptsAttributes.ContentState(emoji:"😀", onesignal: nil)
-        
-        do {
-            let activity = try Activity<ptsAttributes>.request(
-                attributes: attributes,
-                contentState: contentState,
-                pushType: .token)
-            
-            //Listen for early exit
-            Task {
-                for await state in activity.activityStateUpdates {
-                    print("LA state update: \(state)")
-                    if state != ActivityState.active {
-                        OneSignal.User.removeTag("live_activity")
-                    }
-                }
-                
-                
+        let future = Calendar.current.date(byAdding: .minute, value: (Int(15) ), to: Date())!
+        let osAttributes = OneSignalLiveActivityAttributeData.create(activityId: "button_launch")
+        let attributes = CountDownAttributes(staticData: "Launched from button click", timer: Date.now...future, onesignal: osAttributes)
+            let contentState = CountDownAttributes.ContentState(dynamicData:"😀", onesignal: nil)
+            do {
+                let activity = try Activity<CountDownAttributes>.request(
+                    attributes: attributes,
+                    contentState: contentState,
+                    pushType: .token)
+            } catch {
+                print(error.localizedDescription)
             }
-            
-        } catch {
-            print(error.localizedDescription)
         }
-    }
-    
-    
 }

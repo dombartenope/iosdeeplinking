@@ -1,10 +1,16 @@
 import SwiftUI
+import ActivityKit
 import OneSignalFramework
 import OneSignalLiveActivities
 import OneSignalOutcomes
 import OneSignalInAppMessages
 import Mixpanel
 import Foundation
+
+import CallKit
+import PushKit
+
+import UserNotifications
 
 @main
 struct pushtostartApp: App {
@@ -22,8 +28,22 @@ struct pushtostartApp: App {
     }
 }
 
-class AppDelegate: UIResponder, UIApplicationDelegate, OSNotificationClickListener, OSInAppMessageClickListener {
+class AppDelegate: UIResponder, UIApplicationDelegate, OSNotificationClickListener, OSInAppMessageClickListener, PKPushRegistryDelegate{
     
+    /* VOIP LOGIC */
+    let callController = CXCallController()
+    func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
+        print("==================== VOIP ====================")
+        let tokenData = pushCredentials.token
+        let tokenString = tokenData.map { String(format: "%02x", $0) }.joined()
+        print("VoIP Push Token: \(tokenString)")
+    }
+    
+    func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType) {
+        print("==================== VOIP RECEIVED ====================")
+    }
+    /* END VOIP LOGIC */
+
     
     private var urlVM: URLViewModel?
     
@@ -32,12 +52,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate, OSNotificationClickListen
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        Mixpanel.initialize(token: "d810d40cdbc7dead2ff901838c696ccb", trackAutomaticEvents: false)
-        Mixpanel.mainInstance().track(event: "Signed Up", properties: [
-            "Signup Type": "Referral",
-        ])
-        Mixpanel.mainInstance().identify(distinctId: "dominick@onesignal.com");
-        Mixpanel.mainInstance().people.set(properties: [ "plan":"Premium", "$email":"dominick@onesignal.com", "User ID":"dom12345"])
+        //START Authorize OS Notification Carousel Category
+            if #available(iOS 10.0, *) {
+                let options: UNAuthorizationOptions = [.alert]
+                UNUserNotificationCenter.current().requestAuthorization(options: options) { (authorized, error) in
+                    if authorized {
+                        let categoryIdentifier = "OSNotificationCarousel"
+                        let carouselNext = UNNotificationAction(identifier: "OSNotificationCarousel.next", title: "👉", options: [])
+                        let carouselPrevious = UNNotificationAction(identifier: "OSNotificationCarousel.previous", title: "👈", options: [])
+                        let carouselCategory = UNNotificationCategory(identifier: categoryIdentifier, actions: [carouselNext, carouselPrevious], intentIdentifiers: [], options: [])
+                        UNUserNotificationCenter.current().setNotificationCategories([carouselCategory])
+                    }
+                }
+            }
+            //END Authorize OS Notification Carousel Category
+        /* VOIP LOGIC */
+        
+        let voipRegistry = PKPushRegistry(queue: DispatchQueue.main)
+        voipRegistry.delegate = self
+        voipRegistry.desiredPushTypes = [.voIP]
+
+        /* END VOIP LOGIC*/
+        
+        /* MIXPANEL INTEGRATION -- DISABLED FOR PURPOSE OF DEMO
+            Mixpanel.initialize(token: ConfigManager.mixpanelToken, trackAutomaticEvents: false)
+            Mixpanel.mainInstance().track(event: "Signed Up", properties: [
+                "Signup Type": "Referral",
+            ])
+            Mixpanel.mainInstance().identify(distinctId: "dominick@onesignal.com");
+            Mixpanel.mainInstance().people.set(properties: [ "plan":"Premium", "$email":"dominick@onesignal.com", "User ID":"dom12345"])
+        */
         
         //SDK SET UP
         OneSignal.Debug.setLogLevel(.LL_VERBOSE)
@@ -45,21 +89,49 @@ class AppDelegate: UIResponder, UIApplicationDelegate, OSNotificationClickListen
         
         //NOTIFICATION PERMISSION AND LOGIC
         OneSignal.Notifications.requestPermission({ accepted in
-            print("User accepted notifications: \(accepted)")
-        }, fallbackToSettings: true)
+            print("OneSignalAppCode \(accepted)")
+        }, fallbackToSettings: false)
+        
         OneSignal.Notifications.addClickListener(self)
         
         //USER LOGIC
-        OneSignal.login("SG_Demo")
+        OneSignal.login("dom123")
         
-        //LIVE ACTIVITY LOGIC
+        /* LIVE ACTIVITY */
+        // PUSH TO START LISTENER
         OneSignal.LiveActivities.setup(ptsAttributes.self)
-        
+
+        // MANUAL LIVE ACTIVITY TOKEN GENERATION METHOD
+//        if #available(iOS 17.2, *) {
+//          // Setup an async task to monitor and send pushToStartToken updates to OneSignalSDK.
+//          Task {
+//              for try await data in Activity<GameWidgetAttributes>.pushToStartTokenUpdates {
+//                  let token = data.map {String(format: "%02x", $0)}.joined()
+//                  OneSignal.LiveActivities.setPushToStartToken(GameWidgetAttributes.self, withToken: token)
+//              }
+//          }
+//          // Setup an async task to monitor for an activity to be started, for each started activity we
+//          // can then set up an async task to monitor and send updateToken updates to OneSignalSDK. If
+//          // there can be multiple instances of this activity-type, the activity-id (i.e. "my-activity-id") is
+//          // most likely passed down as an attribute within MyWidgetAttributes.
+//          Task {
+//              for await activity in Activity<GameWidgetAttributes>.activityUpdates {
+//                Task {
+//                    for await pushToken in activity.pushTokenUpdates {
+//                        let token = pushToken.map {String(format: "%02x", $0)}.joined()
+//                        OneSignal.LiveActivities.enter("my-activity-id", withToken: token)
+//                    }
+//                }
+//              }
+//          }
+//        }
+        /* END LIVE ACTIVITY */
+
         
         //IAM LOGIC
         OneSignal.InAppMessages.addTrigger("test", withValue: "test")
         OneSignal.InAppMessages.addClickListener(self)
-        
+
         return true
     }
     
@@ -71,13 +143,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, OSNotificationClickListen
     }
     
     func onClick(event: OSNotificationClickEvent) {
-        
+      
         if let launchURL = event.notification.launchURL {
             DispatchQueue.main.async {
                 self.urlVM?.handleURL(launchURL) // Use the shared instance
                 print(launchURL)
             }
         }
+        
+//        let rawOSPayload: String? = event.notification.rawPayload
+        
+        guard let iOSAttachments = event.notification.rawPayload as NSDictionary? as? [String: Any] else {return}
+        print(iOSAttachments)
         
         if let customScheme = event.notification.additionalData {
             if let stringValue = customScheme["url"] as? String {

@@ -7,7 +7,7 @@
       "location" : "https://github.com/mixpanel/mixpanel-swift",
       "state" : {
         "branch" : "master",
-        "revision" : "e7869c433ee01cdc52aa14abf636fe0b412d72f8"
+        "revision" : "61ce9b40817466fb1334db1d7a582fbaf616ab4c"
       }
     },
     {
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/OneSignal/OneSignal-XCFramework",
       "state" : {
-        "revision" : "37c0c6ebfe4aad85be13f6e6ba079282302533fc",
-        "version" : "5.2.0"
+        "revision" : "72e4fa4c3d83f6c1f7b35955e0793754ea2dd15d",
+        "version" : "5.2.4"
       }
     }
   ],

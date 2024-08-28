@@ -13,5 +13,6 @@ struct ptsBundle: WidgetBundle {
     var body: some Widget {
         pts()
         ptsLiveActivity()
+        CountDownActivity()
     }
 }

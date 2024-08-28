@@ -22,6 +22,7 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
+		<string>voip</string>
 	</array>
 </dict>
 </plist>
