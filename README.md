@@ -12,20 +12,26 @@ This uses the default struct provided by the widget when you add that target on 
 
 ## API Request (push to start)
 ```
-curl --request POST \ 
---url "http://onesignal.com/api/v1/apps/APP_ID/activities/activity/ptsAttributes" \ 
---header "Authorization: Basic REST API KEY" \ 
---header "accept: application/json" \ 
---header "content-type: application/json" \ 
---data '{ 
-  "included_segments: ["Subscribed Users"], 
-  "activity_id": "my-example-activity-id", 
-  "attributes": { 
-    "name": "testing123" 
-  }, 
+curl --request POST \
+--url "https://onesignal.com/api/v1/apps/APP_ID/activities/activity/ptsAttributes" \
+--header "Authorization: Basic API_KEY" \
+--header "accept: application/json" \
+--header "content-type: application/json" \
+--data '{
+  "included_segments": ["Subscribed Users"],
+  "activity_id": "my-example-activity-id",
+  "event_attributes": {
+    "name": "testing123"
+  },
   "event_updates": {
-    "emoji": "😃" 
-  }, 
-  "name": "hello world" 
+    "emoji": "😃"
+  },
+  "name": "hello world",
+  "headings": {
+    "en": "English Message"
+  },
+  "contents": {
+      "en":"English Message"
+  }
 }'
 ```
