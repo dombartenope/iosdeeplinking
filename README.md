@@ -6,7 +6,7 @@ This is the deeplink that is currently set up to be used in this project: https:
 ## How to Use
 1. Clone this repository and build the project
 2. Open https://slash-magic-cloak.glitch.me to initialize the url if you want to try to open the browser from the deeplink
-  a. You don't need to do this if you plan on leaving the default click handler in place to intercept the link and handle the deep link within the app
+- You don't need to do this if you plan on leaving the default click handler in place to intercept the link and handle the deep link within the app
 3. Change the App ID to match your own OneSignal app
 4. Send a notification with a launch URL that contains that exact link if using the default event handler, or change the link and logic in the app to match your own
 5. Note the behavior and use this as a reference for your own project
