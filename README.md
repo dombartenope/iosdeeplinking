@@ -1,7 +1,7 @@
 # Deep Linking
 ## Universal Links
 The Deeplink must be hosted on web server and follow the guidance in the [documentation here]("https://documentation.onesignal.com/docs/deep-linking") if you want to change this to match your own.
-- This is [the deeplink]("https://slash-magic-cloak.glitch.me") that is currently set up to be used in this project
+This is the deeplink that is currently set up to be used in this project: https://slash-magic-cloak.glitch.me
 
 
 # Push To Start Live Activities
