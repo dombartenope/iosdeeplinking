@@ -7,6 +7,7 @@
 
 import WidgetKit
 import AppIntents
+import OneSignalFramework
 
 struct ConfigurationAppIntent: WidgetConfigurationIntent {
     static var title: LocalizedStringResource = "Configuration"
@@ -16,3 +17,4 @@ struct ConfigurationAppIntent: WidgetConfigurationIntent {
     @Parameter(title: "Favorite Emoji", default: "😃")
     var favoriteEmoji: String
 }
+

@@ -56,7 +56,7 @@ class URLViewModel: ObservableObject {
     @Published var url: String
     
     init() {
-        url = "No URL found yet"
+        url = "Support Demo"
     }
     
     func handleURL(_ url: String) {
@@ -84,6 +84,12 @@ class LiveActivityViewModel: ObservableObject {
                     attributes: attributes,
                     contentState: contentState,
                     pushType: .token)
+                Task {
+                    for await state in activity.activityStateUpdates {
+                        print("LA state update: \(state)")
+                        //If you wanted to do something based on the state, you would use this:
+                    }
+                }
             } catch {
                 print(error.localizedDescription)
             }

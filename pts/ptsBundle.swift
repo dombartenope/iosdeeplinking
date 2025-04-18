@@ -14,5 +14,6 @@ struct ptsBundle: WidgetBundle {
         pts()
         ptsLiveActivity()
         CountDownActivity()
+        RideShareActivityWidget()
     }
 }

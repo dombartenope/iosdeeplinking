@@ -12,6 +12,12 @@ import PushKit
 
 import UserNotifications
 
+/* OFFLINE LOGGING IMPORTS */
+//This enables the below "LOGGING" code blocks to log to the device console (offline)
+import Darwin
+import os.log
+/* END OFFLINE LOGGING IMPORTS */
+
 @main
 struct pushtostartApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
@@ -27,6 +33,14 @@ struct pushtostartApp: App {
         }
     }
 }
+
+/* LOGGING EXTENSION */
+//Enable this to log to the device console (offline)
+// extension OSLog {
+//     private static var subsystem = Bundle.main.bundleIdentifier!
+//     static let test = OSLog(subsystem: subsystem, category: "Test")
+// }
+/* END LOGGING EXTENSION */
 
 class AppDelegate: UIResponder, UIApplicationDelegate, OSNotificationClickListener, OSInAppMessageClickListener, PKPushRegistryDelegate{
     
@@ -52,20 +66,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate, OSNotificationClickListen
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        //START Authorize OS Notification Carousel Category
-            if #available(iOS 10.0, *) {
-                let options: UNAuthorizationOptions = [.alert]
-                UNUserNotificationCenter.current().requestAuthorization(options: options) { (authorized, error) in
-                    if authorized {
-                        let categoryIdentifier = "OSNotificationCarousel"
-                        let carouselNext = UNNotificationAction(identifier: "OSNotificationCarousel.next", title: "👉", options: [])
-                        let carouselPrevious = UNNotificationAction(identifier: "OSNotificationCarousel.previous", title: "👈", options: [])
-                        let carouselCategory = UNNotificationCategory(identifier: categoryIdentifier, actions: [carouselNext, carouselPrevious], intentIdentifiers: [], options: [])
-                        UNUserNotificationCenter.current().setNotificationCategories([carouselCategory])
-                    }
-                }
-            }
-            //END Authorize OS Notification Carousel Category
+        
+        /* LOGGING REDIRECT */
+        //Enable this to log to the device console (offline)
+        // if true /*isatty(STDERR_FILENO) != 1*/ { // if no terminal is attached to stderr
+        //            let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        //            let logfileUrl = documentsUrl.appendingPathComponent("out.log")
+        //            logfileUrl.withUnsafeFileSystemRepresentation { path in
+        //                guard let path = path else {
+        //                    return
+        //                }
+        //                print("redirect stderr and stderr to: \(String(cString: path))")
+        //                let file = fopen(path, "a")
+        //                assert(file != nil, String(cString: strerror(errno)))
+        //                let fd = fileno(file)
+        //                assert(fd >= 0, String(cString: strerror(errno)))
+        //                let result1 = dup2(fd, STDERR_FILENO)
+        //                assert(result1 >= 0, String(cString: strerror(errno)))
+        //                let result2 = dup2(fd, STDOUT_FILENO)
+        //                assert(result2 >= 0, String(cString: strerror(errno)))
+
+        //                os_log("***** os_log: Test", log: OSLog.test, type: .debug)
+        //                print("***** print:Test")
+        //                NSLog("***** NSLog: Test")
+        //            }
+        //        }
+        /* END LOGGING REDIRECT */
+
+        /* LOGGING CALL */
+        //Enable this to log to the device console (offline)
+        // os_log("os_log: Test", log: OSLog.test, type: .debug)
+        // print("print: Test")
+        // NSLog("NSLog: Test")
+        /* END LOGGING CALL */
+
+        
         /* VOIP LOGIC */
         
         let voipRegistry = PKPushRegistry(queue: DispatchQueue.main)
@@ -95,12 +130,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, OSNotificationClickListen
         OneSignal.Notifications.addClickListener(self)
         
         //USER LOGIC
-        OneSignal.login("dom123")
+        OneSignal.login("eid_test")
         
         /* LIVE ACTIVITY */
         // PUSH TO START LISTENER
         OneSignal.LiveActivities.setup(ptsAttributes.self)
-
+        OneSignal.LiveActivities.setup(RideShareAttributes.self)
+        
         // MANUAL LIVE ACTIVITY TOKEN GENERATION METHOD
 //        if #available(iOS 17.2, *) {
 //          // Setup an async task to monitor and send pushToStartToken updates to OneSignalSDK.
@@ -131,6 +167,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, OSNotificationClickListen
         //IAM LOGIC
         OneSignal.InAppMessages.addTrigger("test", withValue: "test")
         OneSignal.InAppMessages.addClickListener(self)
+        
 
         return true
     }

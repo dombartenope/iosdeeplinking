@@ -12,6 +12,10 @@ class NotificationService: UNNotificationServiceExtension {
             // Deliver the original notification content
             contentHandler(bestAttemptContent)
             
+            
+            
+           
+
 /* UNCOMMENT TO DUPLICATE MESSAGES USING ADDITIONAL DATA
              
              // Modify the notification content
