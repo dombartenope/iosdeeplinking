@@ -3,10 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F268EAC2DB9340F0003EA3B /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F70576B2BE004AC004C419F /* WidgetKit.framework */; };
+		8F268EAD2DB9340F0003EA3B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F70576D2BE004AC004C419F /* SwiftUI.framework */; };
+		8F268EBA2DB934100003EA3B /* ControlCenterWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8F268EAB2DB9340F0003EA3B /* ControlCenterWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8F268ECD2DB941380003EA3B /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8F268ECC2DB941380003EA3B /* Config.xcconfig */; };
 		8F70573F2BE0042D004C419F /* pushtostartApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F70573E2BE0042D004C419F /* pushtostartApp.swift */; };
 		8F7057412BE0042D004C419F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7057402BE0042D004C419F /* ContentView.swift */; };
 		8F7057432BE0042E004C419F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F7057422BE0042E004C419F /* Assets.xcassets */; };
@@ -34,6 +38,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		8F268EB82DB934100003EA3B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8F7057332BE0042D004C419F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8F268EAA2DB9340F0003EA3B;
+			remoteInfo = ControlCenterWidgetExtension;
+		};
 		8F70575E2BE00497004C419F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8F7057332BE0042D004C419F /* Project object */;
@@ -59,6 +70,7 @@
 			files = (
 				8F70577D2BE004AD004C419F /* ptsExtension.appex in Embed Foundation Extensions */,
 				8F7057602BE00497004C419F /* OneSignalNotificationServiceExtension.appex in Embed Foundation Extensions */,
+				8F268EBA2DB934100003EA3B /* ControlCenterWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -66,6 +78,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8F268EAB2DB9340F0003EA3B /* ControlCenterWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ControlCenterWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F268ECC2DB941380003EA3B /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		8F48DE5B2C458CD400BD90AE /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		8F48DE5D2C458CD400BD90AE /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
 		8F70573B2BE0042D004C419F /* pushtostart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pushtostart.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -93,7 +107,30 @@
 		8FED61E42C7E536E003EB6D5 /* pushtostartRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = pushtostartRelease.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		8F268EBD2DB934100003EA3B /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 8F268EAA2DB9340F0003EA3B /* ControlCenterWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		8F268EAE2DB9340F0003EA3B /* ControlCenterWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (8F268EBD2DB934100003EA3B /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = ControlCenterWidget; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
+		8F268EA82DB9340F0003EA3B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8F268EAD2DB9340F0003EA3B /* SwiftUI.framework in Frameworks */,
+				8F268EAC2DB9340F0003EA3B /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8F7057382BE0042D004C419F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -130,9 +167,11 @@
 		8F7057322BE0042D004C419F = {
 			isa = PBXGroup;
 			children = (
+				8F268ECC2DB941380003EA3B /* Config.xcconfig */,
 				8F70573D2BE0042D004C419F /* pushtostart */,
 				8F70575A2BE00497004C419F /* OneSignalNotificationServiceExtension */,
 				8F70576F2BE004AC004C419F /* pts */,
+				8F268EAE2DB9340F0003EA3B /* ControlCenterWidget */,
 				8F70576A2BE004AC004C419F /* Frameworks */,
 				8F70573C2BE0042D004C419F /* Products */,
 			);
@@ -144,6 +183,7 @@
 				8F70573B2BE0042D004C419F /* pushtostart.app */,
 				8F7057592BE00497004C419F /* OneSignalNotificationServiceExtension.appex */,
 				8F7057692BE004AC004C419F /* ptsExtension.appex */,
+				8F268EAB2DB9340F0003EA3B /* ControlCenterWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -209,6 +249,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		8F268EAA2DB9340F0003EA3B /* ControlCenterWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8F268EBE2DB934100003EA3B /* Build configuration list for PBXNativeTarget "ControlCenterWidgetExtension" */;
+			buildPhases = (
+				8F268EA72DB9340F0003EA3B /* Sources */,
+				8F268EA82DB9340F0003EA3B /* Frameworks */,
+				8F268EA92DB9340F0003EA3B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				8F268EAE2DB9340F0003EA3B /* ControlCenterWidget */,
+			);
+			name = ControlCenterWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = ControlCenterWidgetExtension;
+			productReference = 8F268EAB2DB9340F0003EA3B /* ControlCenterWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		8F70573A2BE0042D004C419F /* pushtostart */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8F7057492BE0042E004C419F /* Build configuration list for PBXNativeTarget "pushtostart" */;
@@ -223,6 +285,7 @@
 			dependencies = (
 				8F70575F2BE00497004C419F /* PBXTargetDependency */,
 				8F70577C2BE004AD004C419F /* PBXTargetDependency */,
+				8F268EB92DB934100003EA3B /* PBXTargetDependency */,
 			);
 			name = pushtostart;
 			packageProductDependencies = (
@@ -281,9 +344,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1530;
+				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1520;
 				TargetAttributes = {
+					8F268EAA2DB9340F0003EA3B = {
+						CreatedOnToolsVersion = 16.0;
+					};
 					8F70573A2BE0042D004C419F = {
 						CreatedOnToolsVersion = 15.2;
 					};
@@ -315,11 +381,20 @@
 				8F70573A2BE0042D004C419F /* pushtostart */,
 				8F7057582BE00497004C419F /* OneSignalNotificationServiceExtension */,
 				8F7057682BE004AC004C419F /* ptsExtension */,
+				8F268EAA2DB9340F0003EA3B /* ControlCenterWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		8F268EA92DB9340F0003EA3B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8F268ECD2DB941380003EA3B /* Config.xcconfig in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8F7057392BE0042D004C419F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -348,6 +423,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8F268EA72DB9340F0003EA3B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8F7057372BE0042D004C419F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -381,6 +463,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		8F268EB92DB934100003EA3B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8F268EAA2DB9340F0003EA3B /* ControlCenterWidgetExtension */;
+			targetProxy = 8F268EB82DB934100003EA3B /* PBXContainerItemProxy */;
+		};
 		8F70575F2BE00497004C419F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8F7057582BE00497004C419F /* OneSignalNotificationServiceExtension */;
@@ -394,8 +481,65 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		8F268EBB2DB934100003EA3B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 99SW8E36CT;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ControlCenterWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ControlCenterWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dom.support.ControlCenterWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8F268EBC2DB934100003EA3B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 99SW8E36CT;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ControlCenterWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ControlCenterWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dom.support.ControlCenterWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		8F7057472BE0042E004C419F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8F268ECC2DB941380003EA3B /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -459,6 +603,7 @@
 		};
 		8F7057482BE0042E004C419F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8F268ECC2DB941380003EA3B /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -694,6 +839,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8F268EBE2DB934100003EA3B /* Build configuration list for PBXNativeTarget "ControlCenterWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8F268EBB2DB934100003EA3B /* Debug */,
+				8F268EBC2DB934100003EA3B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		8F7057362BE0042D004C419F /* Build configuration list for PBXProject "pushtostart" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
